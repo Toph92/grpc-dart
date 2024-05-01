@@ -28,17 +28,22 @@ Future<void> main(List<String> args) async {
     ),
   );
   final stub = GreeterClient(channel);
-
   final name = args.isNotEmpty ? args[0] : 'world';
 
-  try {
-    final response = await stub.sayHello(
-      HelloRequest()..name = name,
-      options: CallOptions(compression: const GzipCodec()),
-    );
-    print('Greeter client received: ${response.message}');
-  } catch (e) {
-    print('Caught error: $e');
+  final stopwatch = Stopwatch()..start();
+
+  for (var i = 0; i < 100; i++) {
+    try {
+      final response = await stub.sayHello(
+        HelloRequest()..name = name,
+        options: CallOptions(compression: const GzipCodec()),
+      );
+      //print('Greeter client received: ${response.message}');
+    } catch (e) {
+      print('Caught error: $e');
+    }
   }
+  stopwatch.stop();
+  print('Execution duration: ${stopwatch.elapsed}');
   await channel.shutdown();
 }
