@@ -32,7 +32,7 @@ Future<void> main(List<String> args) async {
 
   final stopwatch = Stopwatch()..start();
 
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 100000; i++) {
     try {
       final response = await stub.sayHello(
         HelloRequest()..name = name,
